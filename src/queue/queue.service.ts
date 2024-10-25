@@ -1,4 +1,4 @@
-import { Injectable, Inject, Optional } from '@nestjs/common';
+import {Injectable, Optional} from '@nestjs/common';
 import {SqsService} from "./sqs.service";
 import {RabbitMqService} from "./rabbitmq.service";
 
