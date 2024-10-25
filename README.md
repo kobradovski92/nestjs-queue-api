@@ -19,7 +19,7 @@ cd nestjs-queue-api
 ### Step 2: Set Up Environment Variables
 Create a `.env` file in the root directory of the project with the following content:
 ```env
-QUEUE_PROVIDER=SQS # or RABBITMQ
+QUEUE_PROVIDER=SQS # or RABBITMQ or both
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=test
 AWS_SECRET_ACCESS_KEY=test
