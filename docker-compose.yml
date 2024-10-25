@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=${AWS_REGION}
+    ports:
+      - '4566:4566'
+    volumes:
+      - ./localstack-init-scripts:/docker-entrypoint-initaws.d
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - QUEUE_PROVIDER=${QUEUE_PROVIDER}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL}
+      - RABBITMQ_URL=${RABBITMQ_URL}
+      - SQS_QUEUE_URL=${SQS_QUEUE_URL}
+    depends_on:
+      - localstack
+      - rabbitmq
